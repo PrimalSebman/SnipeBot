@@ -1,0 +1,7 @@
+discord
+aiosqlite
+firebase-admin
+jsonpickle
+aioscheduler
+apscheduler
+loguru
