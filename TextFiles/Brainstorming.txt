@@ -1,0 +1,8 @@
+/snipe quote
+/snipe register - Get the Sniper role
+/snipe target - Snipe someone else
+/snipe leaderboard - See leaderboard of Snipers
+/snipe achievement_list - See all achievements
+/snipe achievement_request - Manually request an achievement
+/snipe achievement_grant - Only for Snipemins, give someone an achievement
+/snipe achievment_personal - See achievements you've gotten
