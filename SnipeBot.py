@@ -9,6 +9,7 @@ from interactions import slash_command, SlashContext, BaseContext
 from interactions import Client, Intents, listen
 from interactions import check, has_role, Member
 from interactions import Converter, RoleConverter
+from interactions import slash_option, slash_user_option, OptionType
 
 import firebase_admin
 from firebase_admin import credentials
@@ -56,4 +57,20 @@ async def register(ctx: SlashContext):
         await member.add_role(sniperRole)
         await ctx.send("You're a Sniper now!")
  
+@slash_command(
+    name="snipe",
+    description="SnipeBot Commands",
+    sub_cmd_name="target",
+    sub_cmd_description="Snipe another member of the server!"
+)
+@slash_option(
+    name="user_option",
+    description="User you Sniped",
+    required=True,
+    opt_type=OptionType.USER,
+    argument_name="user"
+)
+async def target(ctx: SlashContext, user: Member):
+    await ctx.send("You Sniped: "+str(user.display_name)+"!")
+
 bot.start(TOKEN)
