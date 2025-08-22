@@ -1,8 +1,12 @@
-/snipe quote
-/snipe register - Get the Sniper role
-/snipe target - Snipe someone else
+/snipe quote - Sniper quote for fun
+/snipe register - Get the Sniper role and get an entry on the "leaderboard" (Firebase)
+/snipe target (@ user)- Snipe someone else
 /snipe leaderboard - See leaderboard of Snipers
-/snipe achievement_list - See all achievements
-/snipe achievement_request - Manually request an achievement
-/snipe achievement_grant - Only for Snipemins, give someone an achievement
-/snipe achievment_personal - See achievements you've gotten
+/snipe achievement list - See all achievements
+/snipe achievement request (str name)- Manually request an achievement
+/snipe achievement grant (@ user, str name) - Only for Snipemins, give someone an achievement
+/snipe achievment personal - See achievements you've gotten
+
+Figure out a way to write to a JSON file everyone who's registered
+Then, update the Firebase so that there's a new entry for the person who registered
+I'd say let's keep track of Snipes, Points, Times Sniped, and a list of Achievements gained
