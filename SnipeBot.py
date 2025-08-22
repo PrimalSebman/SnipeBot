@@ -55,5 +55,5 @@ async def register(ctx: SlashContext):
     else:
         await member.add_role(sniperRole)
         await ctx.send("You're a Sniper now!")
-
+ 
 bot.start(TOKEN)
