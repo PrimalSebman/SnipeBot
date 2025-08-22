@@ -1,31 +1,59 @@
 # Imports
 import os
-import discord
 from dotenv import load_dotenv
-from discord.ext import commands
 import random
+import asyncio
+
+import interactions
+from interactions import slash_command, SlashContext, BaseContext
+from interactions import Client, Intents, listen
+from interactions import check, has_role, Member
+from interactions import Converter, RoleConverter
+
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+
+cred = credentials.Certificate("TextFiles\snipebot-5bac2-firebase-adminsdk-fbsvc-51c5f40192.json")
+firebase_admin.initialize_app(cred)
+ref = db.reference("/", None, "https://console.firebase.google.com/u/0/project/snipebot-5bac2/database/snipebot-5bac2-default-rtdb/data")
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
-intents = discord.Intents.default()
-intents.message_content = True  # Needed to read messages
-intents.members = True          # Needed if you want member info
+bot = Client(intents=Intents.DEFAULT)
 
-bot = commands.Bot(command_prefix="/snipe ", intents=intents)
+@slash_command(
+    name="snipe",
+    description="SnipeBot Commands",
+    sub_cmd_name="quote",
+    sub_cmd_description="Get a random video game sniper quote"
+)
+async def snipe_quote(ctx: SlashContext):
+    quotes = ["\"Do you know what an artist and a sniper have in common? Details.\" - Timur \"Glaz\" Glazkov",
+              "\"Acceptance of mediocrity is the first step towards failure.\" - Jaimini \"Kali\" Shah",
+              "\"You're all a bunch of no-hopers.\" - TF2 Sniper",
+              "\"The tide of war has turned.\" - Karl Fairburne"]
+    sendQuote = random.choice(quotes)
+    await ctx.send(sendQuote)
 
-@bot.event
-async def on_ready():
-    print(f'{bot.user.name} has connected to Discord!')
+@slash_command(
+    name="snipe",
+    description="SnipeBot Commands",
+    sub_cmd_name="register",
+    sub_cmd_description="Give yourself the Sniper role"
+)
+async def register(ctx: SlashContext):
+    snipeRoleId = next((role for role in ctx.guild.roles if role.name == "Sniper"), None)
+    member = ctx.author
+    guild = ctx.guild
 
-@bot.command(name='quote', help="Gives a random quote from a video game sniper.")
-async def writeQuote(ctx):
-    sniperQuotes = ["\"You're all a bunch of no-hopers.\" - TF2 Sniper",
-                    "\"Acceptance of mediocrity is the first step towards failure.\" - Jaimini Kalimohan \"Kali\" Shah",
-                    "\"The tide of war has turned.\" - Karl Fairburne",
-                    "\"Do you know what an artist and a sniper have in common? Details.\" - Timur \"Glaz\" Glazkov"]
-    
-    response = random.choice(sniperQuotes)
-    await ctx.send(response)
-    
-bot.run(TOKEN)
+    sniperRole = guild.get_role(snipeRoleId)
+
+    if snipeRoleId in member.roles:
+        await ctx.send("You are already a Sniper, so get Sniping!")
+    else:
+        await member.add_role(sniperRole)
+        await ctx.send("You're a Sniper now!")
+ 
+bot.start(TOKEN)
