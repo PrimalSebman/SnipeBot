@@ -1,9 +1,10 @@
-# Imports
+# Imports - Generic
 import os
 from dotenv import load_dotenv
 import random
 import asyncio
 
+#Imports - Interactions
 import interactions
 from interactions import slash_command, SlashContext, BaseContext
 from interactions import Client, Intents, listen
@@ -11,19 +12,24 @@ from interactions import check, has_role, Member
 from interactions import Converter, RoleConverter
 from interactions import slash_option, slash_user_option, OptionType
 
+#Imports - Firebase
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
+#Setting up connection to Firebase db
 cred = credentials.Certificate("TextFiles\snipebot-5bac2-firebase-adminsdk-fbsvc-51c5f40192.json")
 firebase_admin.initialize_app(cred)
 ref = db.reference("/", None, "https://console.firebase.google.com/u/0/project/snipebot-5bac2/database/snipebot-5bac2-default-rtdb/data")
 
+#Loading Token (for Discord connection)
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 
+#Initializing bot
 bot = Client(intents=Intents.DEFAULT)
 
+#Quote - Mostly just a test command
 @slash_command(
     name="snipe",
     description="SnipeBot Commands",
@@ -38,6 +44,7 @@ async def snipe_quote(ctx: SlashContext):
     sendQuote = random.choice(quotes)
     await ctx.send(sendQuote)
 
+#Register - Gain Sniper role, make new entry for user on Firebase, populate w/ 0 Snipes, 0 Points, 0 times Sniped
 @slash_command(
     name="snipe",
     description="SnipeBot Commands",
@@ -57,6 +64,7 @@ async def register(ctx: SlashContext):
         await member.add_role(sniperRole)
         await ctx.send("You're a Sniper now!")
  
+#Target - Snipe someone else (gain points, addd 1 to Snipe count, increment target's times Sniped)
 @slash_command(
     name="snipe",
     description="SnipeBot Commands",
@@ -71,6 +79,6 @@ async def register(ctx: SlashContext):
     argument_name="user"
 )
 async def target(ctx: SlashContext, user: Member):
-    await ctx.send("You Sniped: "+str(user.display_name)+"!")
+    await ctx.send("You Sniped: "+user.mention+"!")
 
 bot.start(TOKEN)
