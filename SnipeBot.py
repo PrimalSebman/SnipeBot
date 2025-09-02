@@ -11,8 +11,9 @@ from interactions import slash_command, SlashContext, BaseContext
 from interactions import Client, Intents, listen
 from interactions.api.events import Startup
 from interactions import check, has_role, Member
-from interactions import Converter, RoleConverter
-from interactions import slash_option, slash_user_option, OptionType
+from interactions import Converter, RoleConverter, MemberConverter
+from interactions import slash_option, slash_user_option, OptionType, slash_str_option, SlashCommandChoice
+from interactions import Embed
 
 #Imports - Firebase
 import firebase_admin
@@ -91,7 +92,7 @@ async def register(ctx: SlashContext):
     sub_cmd_description="Snipe another member of the server!"
 )
 @slash_option(
-    name="user_option",
+    name="target",
     description="User you Sniped",
     required=True,
     opt_type=OptionType.USER,
@@ -131,6 +132,49 @@ async def target(ctx: SlashContext, user: Member):
                 json.dump(data, f)
         ref = db.reference(f"/"+str(guildId))
         ref.set(data[str(guildId)])
+
+@slash_command(
+    name="snipe",
+    description="SnipeBot Commands",
+    sub_cmd_name="leaderboard",
+    sub_cmd_description="See the Leaderboard of Snipers!"
+)
+@slash_option(
+    name="leaderboard",
+    opt_type=OptionType.STRING,
+    argument_name="leader",
+    description="Leaderboard!",
+    required=True,
+    choices=[
+        SlashCommandChoice(name="Snipes", value="Snipes"),
+        SlashCommandChoice(name="Points", value="Points"),
+        SlashCommandChoice(name="Times Sniped", value="Times Sniped")
+    ]
+)
+async def leaderboard(ctx: SlashContext, leader: str):
+    await ctx.defer()
+    with open("snipeData.json", "r") as f:
+        data = json.load(f) #Load data with json file
+    guildData = data[str(ctx.guild.id)]
+    leaderData = {}
+    for userid in guildData:
+        memberName = await ctx.guild.fetch_member(int(userid))
+        memberName = memberName.display_name
+        leaderData[memberName] = guildData[userid][leader]
+    sortedData = dict(sorted(leaderData.items(), key = lambda item: item[1], reverse = True))
+    board = Embed(
+        title="Leaderboard",
+        description="Top Snipers!",
+        color=0x003057
+    )
+
+    for rank, entry in enumerate(sortedData, start=1):
+        board.add_field(
+            name=f"#{rank}: {entry}",
+            value=f"{sortedData[entry]} "+leader,
+            inline = False
+        )
+    await ctx.send(embeds=board)
 
 
 bot.start(TOKEN)
