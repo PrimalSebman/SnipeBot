@@ -10,3 +10,5 @@
 Figure out a way to write to a JSON file everyone who's registered
 Then, update the Firebase so that there's a new entry for the person who registered
 I'd say let's keep track of Snipes, Points, Times Sniped, and a list of Achievements gained
+
+GT Navy: #003057
