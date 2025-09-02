@@ -112,6 +112,10 @@ async def target(ctx: SlashContext, user: Member):
         await ctx.send("Sorry, you're not a Sniper yet.")
         await ctx.send("Run \"/snipe register\" to become a Sniper and try this Snipe again!")
     else:
+        if (user.id == memberId):
+            return await ctx.send("You can't Snipe yourself!")
+        if (user.id == ctx.bot.user.id):
+            return await ctx.send("You can't Snipe the bot!")
         await ctx.send("You Sniped: "+user.mention+"!")
         with open("snipeData.json", "r") as f:
             data = json.load(f)
