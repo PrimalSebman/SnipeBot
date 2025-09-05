@@ -43,7 +43,8 @@ async def snipe_quote(ctx: SlashContext):
     quotes = ["\"Do you know what an artist and a sniper have in common? Details.\" - Timur \"Glaz\" Glazkov",
               "\"Acceptance of mediocrity is the first step towards failure.\" - Jaimini Kalimohan \"Kali\" Shah",
               "\"You're all a bunch of no-hopers.\" - TF2 Sniper",
-              "\"The tide of war has turned.\" - Karl Fairburne"]
+              "\"The tide of war has turned.\" - Karl Fairburne",
+              "\"After the trigger pull lies a blissful eternity.\" - Widowmaker"]
     sendQuote = random.choice(quotes)
     await ctx.send(sendQuote)
 
@@ -64,24 +65,75 @@ async def register(ctx: SlashContext):
 
     sniperRole = guild.get_role(snipeRoleId)
 
-    if snipeRoleId in member.roles:
-        await ctx.send("You are already a Sniper, so get Sniping!")
+    if (snipeRoleId in member.roles):
+        with open("snipeData.json", "r") as f:
+            content = f.read().strip()
+            if content:
+                local = json.loads(content)
+            else:
+                local = {}
+
+        ref = db.reference(f"/{guildId}")
+        firebaseData = ref.get()
+        if firebaseData is not None:
+            local[str(guildId)] = firebaseData
+        else:
+            local.setdefault(str(guildId), {})
+
+        memberData = local[str(guildId)].get(str(memberId), {})
+
+        if "Killstreak" not in memberData or "Max Killstreak" not in memberData:
+            if ("Killstreak" not in memberData):
+                memberData["Killstreak"] = 0
+                local[str(guildId)][str(memberId)] = memberData
+
+                with open("snipeData.json", "w") as f:
+                    json.dump(local, f, indent=4)
+
+                ref.set(local[str(guildId)])
+                await ctx.send("Sniper data updated: You can now have a Killstreak!")
+            if ("Max Killstreak" not in memberData):
+                memberData["Max Killstreak"] = 0
+                local[str(guildId)][str(memberId)] = memberData
+
+                with open("snipeData.json", "w") as f:
+                    json.dump(local, f, indent=4)
+
+                ref.set(local[str(guildId)])
+                await ctx.send("Sniper data updated: You now have a Max Killstreak!")
+        else:
+            await ctx.send("You are already a Sniper, so get Sniping!")
     else:
         await member.add_role(sniperRole)
+
         with open("snipeData.json", "r") as f:
-            dict = json.load(f)
-        #Now see if they're in the firebase already
-        check = dict.get(str(guildId), {}).get(str(memberId), -1)
-        if (check == -1):
-            dict[str(guildId)][memberId] = {
+            content = f.read().strip()
+            if content:
+                local = json.loads(content)
+            else:
+                local = {}
+
+        ref = db.reference(f"/{guildId}")
+        firebaseData = ref.get()
+        if firebaseData is not None:
+            local[str(guildId)] = firebaseData
+        else:
+            local.setdefault(str(guildId), {})
+
+        # Create entry if missing
+        if str(memberId) not in local[str(guildId)]:
+            local[str(guildId)][str(memberId)] = {
                 "Snipes": 0,
                 "Points": 0,
-                "Times Sniped": 0
+                "Times Sniped": 0,
+                "Killstreak": 0,
+                "Max Killstreak": 0
             }
-            with open("snipeData.json", "w") as f:
-                json.dump(dict, f)
-        ref = db.reference(f"/"+str(guildId))
-        ref.set(dict[str(guildId)])
+
+        with open("snipeData.json", "w") as f:
+            json.dump(local, f, indent=4)
+
+        ref.set(local[str(guildId)])
         await ctx.send("You're a Sniper now!")
  
 #Target - Snipe someone else (gain points, add 1 to Snipe count, increment target's times Sniped)
@@ -108,6 +160,7 @@ async def target(ctx: SlashContext, user: Member):
     await ctx.defer()
 
     sniperRole = guild.get_role(snipeRoleId)
+
     if (sniperRole not in member.roles):
         await ctx.send("Sorry, you're not a Sniper yet.")
         await ctx.send("Run \"/snipe register\" to become a Sniper and try this Snipe again!")
@@ -116,24 +169,44 @@ async def target(ctx: SlashContext, user: Member):
             return await ctx.send("You can't Snipe yourself!")
         if (user.id == ctx.bot.user.id):
             return await ctx.send("You can't Snipe the bot!")
+        
         await ctx.send("You Sniped: "+user.mention+"!")
+
+        ref = db.reference(f"/"+str(guildId))
+        data = ref.get()
+        with open("snipeData.json", "w") as f:
+            json.dump({str(guildId): data}, f, indent=4)
+
         with open("snipeData.json", "r") as f:
             data = json.load(f)
-        snipes = data.get(str(guildId), {}).get(str(memberId), -1).get("Snipes", -1)
+
+        snipes = data[str(guildId)][str(memberId)]["Snipes"]
         snipes += 1
-        points = data.get(str(guildId), {}).get(str(memberId), -1).get("Points", -1)
+        killstreak = data[str(guildId)][str(memberId)].get("Killstreak", 0)
+        killstreak += 1
+        maxStreak = data[str(guildId)][str(memberId)].get("Max Killstreak", 0)
+        if (killstreak > maxStreak):
+            maxStreak = killstreak
+        points = data[str(guildId)][str(memberId)]["Points"]
+
         if (sniperRole in user.roles):
             points += 10
-            otherTimesSniped = data[str(guildId)][str(userId)].get("Times Sniped", 0)
+            otherTimesSniped = data[str(guildId)][str(userId)]["Times Sniped"]
             otherTimesSniped += 1
             data[str(guildId)][str(userId)]["Times Sniped"] = otherTimesSniped
+            data[str(guildId)][str(userId)]["Killstreak"] = 0
         else:
             points += 5
         data[str(guildId)][str(memberId)]["Snipes"] = snipes
         data[str(guildId)][str(memberId)]["Points"] = points
+        data[str(guildId)][str(memberId)]["Killstreak"] = killstreak
+        data[str(guildId)][str(memberId)]["Max Killstreak"] = maxStreak
+
         await ctx.send("You have "+str(snipes)+" Snipes!")
+
         with open("snipeData.json", "w") as f:
                 json.dump(data, f)
+
         ref = db.reference(f"/"+str(guildId))
         ref.set(data[str(guildId)])
 
@@ -152,19 +225,28 @@ async def target(ctx: SlashContext, user: Member):
     choices=[
         SlashCommandChoice(name="Snipes", value="Snipes"),
         SlashCommandChoice(name="Points", value="Points"),
-        SlashCommandChoice(name="Times Sniped", value="Times Sniped")
+        SlashCommandChoice(name="Times Sniped", value="Times Sniped"),
+        SlashCommandChoice(name="Killstreak", value="Killstreak"),
+        SlashCommandChoice(name="Max Killstreak", value="Max Killstreak")
     ]
 )
 async def leaderboard(ctx: SlashContext, leader: str):
     await ctx.defer()
+    guildId = ctx.guild.id
+    ref = db.reference(f"/"+str(guildId))
+    data = ref.get()
+    with open("snipeData.json", "w") as f:
+        json.dump({str(guildId): data}, f, indent=4)
+
     with open("snipeData.json", "r") as f:
-        data = json.load(f) #Load data with json file
+        data = json.load(f)
+
     guildData = data[str(ctx.guild.id)]
     leaderData = {}
     for userid in guildData:
         memberName = await ctx.guild.fetch_member(int(userid))
         memberName = memberName.display_name
-        leaderData[memberName] = guildData[userid][leader]
+        leaderData[memberName] = guildData[userid].get(leader, 0)
     sortedData = dict(sorted(leaderData.items(), key = lambda item: item[1], reverse = True))
     board = Embed(
         title="Leaderboard",
@@ -176,7 +258,7 @@ async def leaderboard(ctx: SlashContext, leader: str):
         board.add_field(
             name=f"#{rank}: {entry}",
             value=f"{sortedData[entry]} "+leader,
-            inline = False
+            inline = True
         )
     await ctx.send(embeds=board)
 
