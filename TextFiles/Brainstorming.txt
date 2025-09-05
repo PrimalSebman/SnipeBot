@@ -12,3 +12,33 @@ Then, update the Firebase so that there's a new entry for the person who registe
 I'd say let's keep track of Snipes, Points, Times Sniped, and a list of Achievements gained
 
 GT Navy: #003057
+
+Achievements (Names WIP)
+
+Total Snipes
+Official - 1 Snipe
+Earning Your Stripes - 5 Snipes
+Contract Killer - 10 Snipes
+Sentintel - 25 Snipes
+Sniper Legend - 50 Snipes
+
+Variety
+Sniper Sniper - Snipe a Sniper
+Double Kill - Snipe 2 people at once
+Bouncing Bullet - Snipe 3 people at once
+Be Polite - Snipe 5 different people
+Be Efficient - Snipe 10 different people
+Have a Plan to Kill Everyone You Meet - Snipe all Snipers
+
+Getting Sniped
+Welcome to the Afterlife - Get Sniped
+Repeat Handshaker - Get Sniped 5 times
+Cemetery Sightseer - Get Sniped 10 times
+
+Killstreak
+Streak Activated - Get a Killstreak of 2
+On a Roll - Get a Killstreak of 3
+Menace - Get a Killstreak of 5
+The White Death - Get a Killstreak of 10
+
+Every Last One - Get all other achievements
