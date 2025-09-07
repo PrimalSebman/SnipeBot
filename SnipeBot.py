@@ -263,5 +263,28 @@ async def leaderboard(ctx: SlashContext, leader: str):
         )
     await ctx.send(embeds=board)
 
+@slash_command(
+    name="snipe",
+    description="SnipeBot Commands",
+    group_name="achievement",
+    group_description="Achievement-related Commands"
+    sub_cmd_name="list",
+    sub_cmd_description="List of all Achievements, by category (or all)"
+)
+@slash_option(
+    name="category",
+    opt_type=OptionType.STRING,
+    description="Category to view (or all)"
+    argument_name="category",
+    required=False,
+    choices = [
+        SlashCommandChoice(name="Total Snipes", value="Total"),
+        SlashCommandChoice(name="Killstreak", value="Streak"),
+        SlashCommandChoice(name="Variety", value="Variety"),
+        SlashCommandChoice(name="Getting Sniped", value="Sniped")
+    ]
+)
+async def achievementList(ctx: SlashContext, category: str = "All"):
+    return await ctx.send("Yoooooooo")
 
 bot.start(TOKEN)
