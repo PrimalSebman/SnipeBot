@@ -20,14 +20,15 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-#Setting up connection to Firebase db
-cred = credentials.Certificate("TextFiles\snipebot-5bac2-firebase-adminsdk-fbsvc-51c5f40192.json")
-firebase_admin.initialize_app(cred, {'databaseURL': "https://snipebot-5bac2-default-rtdb.firebaseio.com/"})
-ref = db.reference("/")
-
 #Loading Token (for Discord connection)
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+FIREBASE_KEY_PATH = os.getenv('FIREBASE_KEY')
+
+#Firebase connection
+cred = credentials.Certificate(FIREBASE_KEY_PATH)
+firebase_admin.initialize_app(cred, {'databaseURL': 'https://snipebot-5bac2-default-rtdb.firebaseio.com/'})
+ref = db.reference("/")
 
 #Initializing bot
 bot = Client(intents=Intents.DEFAULT)
