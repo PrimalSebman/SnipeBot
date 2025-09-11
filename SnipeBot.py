@@ -23,7 +23,7 @@ from firebase_admin import db
 
 #Loading Token (for Discord connection)
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('TEST_TOKEN')
 FIREBASE_KEY_PATH = os.getenv('FIREBASE_KEY')
 
 #Firebase connection
