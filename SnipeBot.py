@@ -463,7 +463,7 @@ async def target(ctx: SlashContext, user: Member, user2: Member = None, user3: M
             userAchievements.append("Be Efficient")
             await ctx.send("You earned an achievement: Be Efficient!")
             points += 100
-        if (len(usersSniped) == len(data[str(guildId)]) and "Have a Plan to Kill Everyone You Meet" not in userAchievements and len(usersSniped) >= 10):
+        if (len(usersSniped) + 1 == len(data[str(guildId)]) and "Have a Plan to Kill Everyone You Meet" not in userAchievements and len(usersSniped) >= 10):
             userAchievements.append("Have a Plan to Kill Everyone You Meet")
             await ctx.send("You earned an achievement: Have a Plan to Kill Everyone You Meet!")
             points += 150
