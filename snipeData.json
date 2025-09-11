@@ -1,49 +1,72 @@
 {
-    "1414160091678113865": {
-        "1414813156399910983": {
-            "Achievements": [
-                "Repeat Handshaker",
-                "Cemetery Sightseer",
-                "Official",
-                "Streak Activated",
-                "On a Roll",
-                "Earning Your Stripes",
-                "Menace",
-                "Contract Killer",
-                "The White Death",
-                "Welcome to the Afterlife"
-            ],
+    "1141586940613902347": {
+        "176027799117627392": {
+            "Killstreak": 2,
+            "Max Killstreak": 2,
+            "Points": 10,
+            "Snipes": 2,
+            "Times Sniped": 1
+        },
+        "217102956628148225": {
+            "Killstreak": 2,
+            "Max Killstreak": 2,
+            "Points": 25,
+            "Snipes": 4,
+            "Times Sniped": 0
+        },
+        "264780207569895424": {
+            "Points": 0,
+            "Snipes": 0,
+            "Times Sniped": 1
+        },
+        "385570069373255691": {
             "Killstreak": 0,
-            "Max Killstreak": 11,
-            "Points": 635,
-            "Snipes": 11,
-            "Times Sniped": 60
+            "Max Killstreak": 2,
+            "Points": 10,
+            "Snipes": 2,
+            "Times Sniped": 1
+        },
+        "385593510490800129": {
+            "Points": 0,
+            "Snipes": 0,
+            "Times Sniped": 0
+        },
+        "482313463104929793": {
+            "Points": 0,
+            "Snipes": 0,
+            "Times Sniped": 0
+        },
+        "601867928530321437": {
+            "Killstreak": 1,
+            "Max Killstreak": 1,
+            "Points": 10,
+            "Snipes": 2,
+            "Times Sniped": 0
         },
         "678092396688441346": {
-            "Achievements": [
-                "Official",
-                "Streak Activated",
-                "On a Roll",
-                "Earning Your Stripes",
-                "Menace",
-                "Contract Killer",
-                "The White Death",
-                "Welcome to the Afterlife",
-                "Repeat Handshaker",
-                "Cemetery Sightseer",
-                "Sentinel",
-                "Sniping Legend",
-                "Every Last One",
-                "Sniper Sniper"
-            ],
-            "Killstreak": 47,
-            "Max Killstreak": 47,
-            "Points": 1345,
-            "Snipes": 57,
-            "Times Sniped": 11,
-            "Users Sniped": [
-                1414813156399910983
-            ]
+            "Killstreak": 1,
+            "Max Killstreak": 1,
+            "Points": 10,
+            "Snipes": 1,
+            "Times Sniped": 0
+        },
+        "690592533910257744": {
+            "Killstreak": 1,
+            "Max Killstreak": 1,
+            "Points": 5,
+            "Snipes": 1,
+            "Times Sniped": 0
+        },
+        "734929621619048491": {
+            "Points": 15,
+            "Snipes": 2,
+            "Times Sniped": 0
+        },
+        "760229077486665758": {
+            "Killstreak": 0,
+            "Points": 0,
+            "Snipes": 0,
+            "Times Sniped": 0
         }
     }
 }

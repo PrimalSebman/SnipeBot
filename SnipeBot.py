@@ -47,7 +47,7 @@ achievementsStreak = Embed(
 )
 
 achievementsVariety = Embed(
-    title="Achievements - Variety (NOT IMPLEMENTED YET)",
+    title="Achievements - Variety",
     description="You need to complete various tasks to earn these!",
     color=0xB3A369
 )
