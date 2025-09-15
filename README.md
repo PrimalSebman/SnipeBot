@@ -36,7 +36,7 @@ Want to start Sniping?
 - `/snipe quote` - For fun, get a random quote from a video game Sniper!
 
 # Contact/Feedback
-This has been my first major project on my own! It's in a state that I enjoy right now, but I'm open to any feedback or suggestions to improve!
+This has been my first major project on my own! It's in a state that I enjoy right now, but I'm open to any feedback or suggestions to improve or expand the Bot!
 ### Ways to contact me
 * Email: Sebastianveras06@hotmail.com
 * Discord: @PrimalSebman
