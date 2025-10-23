@@ -331,7 +331,7 @@ async def target(ctx: SlashContext, user: Member, user2: Member = None, user3: M
             elif (checkOtherSniped >= 3 and "Cemetery Sightseer" not in otherAchievements):
                 otherAchievements.append("Cemetery Sightseer")
                 await ctx.send(user.mention+" earned an achievement: Cemetery Sightseer!")
-            if (len(otherAchievements) == 12):
+            if (len(otherAchievements) == 18):
                 otherAchievements.append("Every Last One")
                 await ctx.send("Congratulations "+user.mention+"! You just got Every Last One!!")
                 otherPoints = data[str(guildId)][str(userId)]["Points"]
@@ -362,7 +362,7 @@ async def target(ctx: SlashContext, user: Member, user2: Member = None, user3: M
                 elif (checkOtherSniped >= 3 and "Cemetery Sightseer" not in otherAchievements):
                     otherAchievements.append("Cemetery Sightseer")
                     await ctx.send(user.mention+" earned an achievement: Cemetery Sightseer!")
-                if (len(otherAchievements) == 12):
+                if (len(otherAchievements) == 18):
                     otherAchievements.append("Every Last One")
                     await ctx.send("Congratulations "+user2.mention+"! You just got Every Last One!!")
                     otherPoints = data[str(guildId)][str(user2Id)]["Points"]
@@ -393,7 +393,7 @@ async def target(ctx: SlashContext, user: Member, user2: Member = None, user3: M
                 elif (checkOtherSniped >= 3 and "Cemetery Sightseer" not in otherAchievements):
                     otherAchievements.append("Cemetery Sightseer")
                     await ctx.send(user.mention+" earned an achievement: Cemetery Sightseer!")
-                if (len(otherAchievements) == 12):
+                if (len(otherAchievements) == 18):
                     otherAchievements.append("Every Last One")
                     await ctx.send("Congratulations "+user3.mention+"! You just got Every Last One!!")
                     otherPoints = data[str(guildId)][str(user3Id)]["Points"]
