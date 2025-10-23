@@ -694,6 +694,9 @@ async def personalAchievements(ctx: SlashContext, category: str = "All"):
     paginator = Paginator.create_from_embeds(bot, *embeds)
     return await paginator.send(ctx)
 
+async def help(ctx: SlashContext):
+    await ctx.send("We'll do this later")
+
 def checkTotalSnipeAchievements(snipes: int):
     if (snipes >= 1 and snipes < 5):
         return 1
