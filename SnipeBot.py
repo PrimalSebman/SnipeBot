@@ -471,6 +471,7 @@ async def target(ctx: SlashContext, user: Member, user2: Member = None, user3: M
         if (len(userAchievements) == 18):
             userAchievements.append("Every Last One")
             await ctx.send("Congratulations! You just got Every Last One!!!")
+            points += 500
         data[str(guildId)][str(memberId)]["Users Sniped"] = usersSniped
         data[str(guildId)][str(memberId)]["Points"] = points
         data[str(guildId)][str(memberId)]["Achievements"] = userAchievements
