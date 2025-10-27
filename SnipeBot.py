@@ -95,7 +95,12 @@ achievementsSniped.add_field(name="Cemetery Sightseer", value="Get Sniped 10 tim
 achievementsSpecial.add_field(name="Every Last One", value="Get all achievements from all categories")
 
 helpEmbed.add_field(name="/snipe register", value="Register as a Sniper so you can Snipe others!")
-
+helpEmbed.add_field(name="/snipe target [Accepts up to 3 targets]", value="Snipe another user to gain points and earn achievements!")
+helpEmbed.add_field(name="/snipe leaderboard [stat]", value="Get different leaderboards to see how people are doing!")
+helpEmbed.add_field(name="/snipe achievement list [type]", value="List off all achievements or just achievements of a certain type.")
+helpEmbed.add_field(name="/snipe achievement personal", value="List achievements that you have.")
+helpEmbed.add_field(name="/snipe help", value="See all the Commands again")
+helpEmbed.add_field(name="/snipe quote", value="Get a quote from a video game sniper (and increase my google vm usage)")
 #Quote - Mostly just a test command
 @slash_command(
     name="snipe",
@@ -704,7 +709,7 @@ async def personalAchievements(ctx: SlashContext, category: str = "All"):
     return await paginator.send(ctx)
 
 async def help(ctx: SlashContext):
-    
+    return await ctx.send(embed=helpEmbed)
 
 def checkTotalSnipeAchievements(snipes: int):
     if (snipes >= 1 and snipes < 5):
