@@ -707,7 +707,12 @@ async def personalAchievements(ctx: SlashContext, category: str = "All"):
     embeds=[personalTotal, personalStreak, personalVariety, personalSniped, personalSpecial]
     paginator = Paginator.create_from_embeds(bot, *embeds)
     return await paginator.send(ctx)
-
+@slash_command(
+    name="snipe",
+    description="SnipeBot Commands",
+    sub_cmd_name="help",
+    sub_cmd_description="View all Commands"
+)
 async def help(ctx: SlashContext):
     return await ctx.send(embed=helpEmbed)
 
