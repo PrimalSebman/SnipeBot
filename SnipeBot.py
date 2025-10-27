@@ -23,7 +23,7 @@ from firebase_admin import db
 
 #Loading Token (for Discord connection)
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
+TOKEN = os.getenv('TEST_TOKEN')
 FIREBASE_KEY_PATH = os.getenv('FIREBASE_KEY')
 
 #Firebase connection
@@ -64,6 +64,12 @@ achievementsSpecial = Embed(
     color=0xB3A369
 )
 
+helpEmbed = Embed(
+    title="Commands",
+    description="Each Command for SnipeBot and what it does",
+    color=0xB3A369
+)
+
 achievementsTotal.add_field(name="Official", value="Get your first Snipe!", inline=True)
 achievementsTotal.add_field(name="Earning Your Stripes", value="Get 5 Total Snipes", inline=True)
 achievementsTotal.add_field(name="Contract Killer", value="Get 10 Total Snipes", inline=True)
@@ -87,6 +93,8 @@ achievementsSniped.add_field(name="Repeat Handshaker", value="Get Sniped 5 times
 achievementsSniped.add_field(name="Cemetery Sightseer", value="Get Sniped 10 times", inline=True)
 
 achievementsSpecial.add_field(name="Every Last One", value="Get all achievements from all categories")
+
+helpEmbed.add_field(name="/snipe register", value="Register as a Sniper so you can Snipe others!")
 
 #Quote - Mostly just a test command
 @slash_command(
@@ -695,7 +703,7 @@ async def personalAchievements(ctx: SlashContext, category: str = "All"):
     return await paginator.send(ctx)
 
 async def help(ctx: SlashContext):
-    await ctx.send("We'll do this later")
+    
 
 def checkTotalSnipeAchievements(snipes: int):
     if (snipes >= 1 and snipes < 5):
