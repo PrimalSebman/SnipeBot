@@ -20,6 +20,7 @@ Want to start Sniping?
 ### Setup Requirements
 * Your Server will need a role called **Sniper**
   * Permissions don't matter, as long as the bot is above it and can manage that role
+  * Make sure that SnipeBot's role is above the Sniper role, or else the bot won't work.
 * Bot uses the following permissions
   * `Manage Roles` - This is used to handle interactions with the Sniper role, which is how the Bot handles tracking of Snipes
   * `Send Messages` - To display information about Snipes to server members
@@ -34,6 +35,7 @@ Want to start Sniping?
 - `/snipe achievement list` - View all currently implemented Achievements.
 - `/snipe achievement personal` - View the Achievements that you have!
 - `/snipe quote` - For fun, get a random quote from a video game Sniper!
+- `/snipe help` - If you ever want a refresher on all the commands.
 
 # Contact/Feedback
 This has been my first major project on my own! It's in a state that I enjoy right now, but I'm open to any feedback or suggestions to improve or expand the Bot!
